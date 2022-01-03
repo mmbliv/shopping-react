@@ -23,7 +23,7 @@ export type singleProductType = {
     images: { url: string }[];
     name: string;
     price: number;
-    review: number;
+    reviews: number;
     shipping: boolean;
     stars: number;
     stock: number;
@@ -57,7 +57,7 @@ const initialState: initialStateType = {
         images: [],
         name: '',
         price: 0,
-        review: 0,
+        reviews: 0,
         shipping: true,
         stars: 0,
         stock: 0,

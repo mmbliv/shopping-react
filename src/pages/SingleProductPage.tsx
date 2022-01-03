@@ -4,16 +4,19 @@ import { single_product_url } from "../utils/constant";
 import { useProductsContext } from "../context/products_context";
 import Loading from "../components/Loading";
 import { SingleProductSlide } from "../components/SingleProductSlides";
+import ProductInfor from "../components/ProductInfor";
+import styled from 'styled-components';
 
 
 
 const SingleProductPage = () => {
-  const [imgs, setImgs] = useState([''])
+
   const { fetchSingleProduct, single_product: product, single_product_error: error, single_product_loading: loading } = useProductsContext()
   const { id } = useParams()
-  const { name, price, description, stock, review, id: sku, company, imgUrls } = product
+  const { name, price, description, stock, reviews, id: sku, company, imgUrls } = product
 
-  console.log(imgUrls)
+
+
   useEffect(() => {
     fetchSingleProduct(single_product_url + id)
   }, [id])
@@ -26,9 +29,20 @@ const SingleProductPage = () => {
   if (error) {
     return <h1>something went wrong </h1>
   }
-  return <div>
+  return <Wrapper className='section section-center'>
     <SingleProductSlide images={imgUrls} />
-  </div>;
+    <ProductInfor {...product} />
+  </Wrapper>;
 };
 
 export default SingleProductPage;
+const Wrapper = styled.section`
+display: grid;
+@media (min-width: 992px){
+  grid-template-columns: 1fr 1fr;
+  gap:3rem;
+ 
+}
+
+
+`
