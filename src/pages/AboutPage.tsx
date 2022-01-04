@@ -3,7 +3,7 @@ import heroImg from '../asssets/hero-bcg-2.jpeg'
 import styled from 'styled-components'
 import { Grid } from '@mui/material'
 const AboutPage = () => {
-  return <Wrapper className='section-center'>
+  return <Wrapper className='section-center page-100'>
     <Grid container spacing={3} alignItems='flex-end'>
       <Grid item xs={12} md={5}>
         <img src={heroImg} alt='heroimg' />

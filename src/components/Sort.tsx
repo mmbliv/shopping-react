@@ -1,22 +1,36 @@
 import React from 'react'
-import GridViewIcon from '@mui/icons-material/GridView'
-import ViewColumnIcon from '@mui/icons-material/ViewColumn'
+import ViewComfyAltOutlinedIcon from '@mui/icons-material/ViewComfyAltOutlined'
+import CalendarViewWeekOutlinedIcon from '@mui/icons-material/CalendarViewWeekOutlined'
 import styled from 'styled-components'
 import { IconButton } from '@mui/material'
 import GridView from '@mui/icons-material/GridView'
+import { useFilterContext } from '../context/filter_context'
 
 const Sort = () => {
+    const { setGridView, setListView } = useFilterContext()
     return (
         <Wrapper>
-            <IconButton>
-                <GridViewIcon />
-            </IconButton>
-            <IconButton>
-                <ViewColumnIcon />
-            </IconButton>
-            <p>proucts</p>
-            <div className='line'></div>
-            <p>Sort By <span></span></p>
+            <div className='btn-container'>
+                <IconButton onClick={setGridView} >
+                    <ViewComfyAltOutlinedIcon />
+                </IconButton>
+                <IconButton onClick={setListView}>
+                    <CalendarViewWeekOutlinedIcon />
+                </IconButton>
+
+            </div>
+            <h5>Proucts Found</h5>
+            <hr />
+            <form action="">
+                <label htmlFor="sort">Sort By</label>
+                <select name="sort" id="sort" >
+                    <option value="price-lowest">Price (Lowest)</option>
+                    <option value="price-highest">Price (Highest)</option>
+                    <option value="name-a">Name (A-Z)</option>
+                    <option value="name-z">Name (Z-A)</option>
+
+                </select>
+            </form>
 
         </Wrapper>
     )
@@ -24,5 +38,34 @@ const Sort = () => {
 
 export default Sort
 const Wrapper = styled.section`
+
+display: grid;
+justify-content: center;
+margin-bottom: 2rem;
+
+svg{
+    font-size: 2em;
+    
+}
+form{
+    display: flex;
+    gap:1rem;
+    font-size: 1rem;
+   
+}
+
+select{
+    border:none;
+    font-size: 1rem;
+}
+
+
+@media (min-width:768px){
+    
+    grid-template-columns:auto auto 1fr auto ;
+    align-items: center;
+   
+    
+}
 
 `

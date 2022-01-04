@@ -16,7 +16,7 @@ const ListView: React.FC<Props> = ({ products }) => {
                     <footer>
                         <h5>{product.name}</h5>
                         <h5>{formatPrice(product.price)}</h5>
-                        <p>{product.description.substring(1, 250)}...</p>
+                        <p>{product.description.substring(0, 250)}...</p>
                         <Link to={`/Product/${product.id}`} className='btn'>
                             details
                         </Link>
