@@ -11,7 +11,12 @@ const GridView: React.FC<props> = ({ products }) => {
     return (
         <Wrapper className='section'>
             {products.map((product) => {
-                return <Product image={product.image} id={product.id} name={product.name} price={product.price} />
+                return <Product
+                    image={product.image}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    key={product.id} />
             })}
         </Wrapper>
     )

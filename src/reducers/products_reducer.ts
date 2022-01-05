@@ -13,7 +13,11 @@ export enum ActionKind{
     GET_SINGLE_PRODUCT_ERROR='GET_SINGLE_PRODUCT_ERROR',
     FILTER_PRODUCT='FILTER_PRODUCT',
     GRID_VIEW='GRID_VIEW',
-    LIST_VIEW='LIST_VIEW'
+    LIST_VIEW='LIST_VIEW',
+    SORT_METHOD='SORT_METHOD',
+    SORT_PRODUCTS='SORT_PRODUCTS',
+    SEARCH_PRODUCTS='SEARCH_PRODUCTS',
+    FILTER_START=' FILTER_START'
 }
  type ActionType={
      type:ActionKind;
@@ -50,6 +54,7 @@ const products_reducer = (state:initialStateType,action:ActionType):initialState
         }
         return {...state,single_product_loading:false,single_product:{...payload,imgUrls:imgUrls}}
     }
+    
     
     return state
 }

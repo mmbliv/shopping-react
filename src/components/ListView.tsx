@@ -11,7 +11,7 @@ const ListView: React.FC<Props> = ({ products }) => {
     return (
         <Wrapper>
             {products.map((product) => {
-                return <div className='card'>
+                return <div className='card' key={product.id}>
                     <img src={product.image} alt={product.name} />
                     <footer>
                         <h5>{product.name}</h5>
