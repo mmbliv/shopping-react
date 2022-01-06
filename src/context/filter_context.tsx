@@ -4,6 +4,7 @@ import reducer from '../reducers/filter_reducer'
 import { ActionKind } from '../reducers/products_reducer'
 import { productsType } from './products_context'
 import { useProductsContext } from "./products_context"
+
 export type FilterStateType = {
     filter_products: productsType[];
     all_products: productsType[];
@@ -74,10 +75,16 @@ export const FilterProvider: React.FC = ({ children }) => {
         dispatch({ type: ActionKind.SORT_METHOD, payload: e.target.value })
     }
     // search products
-    const searchProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const searchProducts = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        // let name: string
+        // let value: strings
+
+
         let name = e.target.name
         let value = e.target.value
         dispatch({ type: ActionKind.SEARCH_PRODUCTS, payload: { name, value } })
+
 
     }
     const cleanFilter = () => {
