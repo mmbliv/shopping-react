@@ -8,7 +8,7 @@ export const formatPrice=(number:number)=>{
 }
 type keyType='category'|'colors'|'company'
 export const getUniqueFilterItem=(data:productsType[],key:keyType)=>{
-    let uniqueItem=data.map((item)=>item[key])
+    let uniqueItem=data.map((item)=>item[key]) as string[]
     if(key==='colors'){
         uniqueItem=uniqueItem.flat()
     }

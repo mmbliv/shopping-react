@@ -59,6 +59,15 @@ gap: 1rem;
     width: max-content; 
     padding :0 5px ;
 }
+select{  
+    outline: none;
+}
+
+option:checked{
+    text-decoration: underline;
+    box-shadow: 0 0 10px 100px #FFF inset; 
+   
+}
 
 
 `
