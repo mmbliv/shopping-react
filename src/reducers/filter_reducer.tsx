@@ -59,7 +59,7 @@ const filter_reducer = (state: FilterStateType, action: ActionType): FilterState
 
     }
     if (action.type === ActionKind.FILTER_START) {
-        console.log('start')
+
     }
     return state
 }

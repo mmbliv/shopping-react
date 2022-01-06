@@ -28,7 +28,7 @@ const Filter = () => {
                     value={filters.category}
                     size={categoryItems.length}
                     className='category-select'
-                // onChange={searchProducts}
+                    onChange={searchProducts}
                 >
                     {categoryItems.map((item, index) => {
                         return (

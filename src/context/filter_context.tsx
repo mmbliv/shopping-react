@@ -11,7 +11,7 @@ export type FilterStateType = {
     grid_view: boolean;
     setGridView: () => void;
     setListView: () => void;
-    searchProducts: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    searchProducts: (e: React.SyntheticEvent) => void;
     setSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     cleanFilter: () => void;
     sort: string;
@@ -76,13 +76,17 @@ export const FilterProvider: React.FC = ({ children }) => {
     }
     // search products
 
-    const searchProducts = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const searchProducts = (e: React.SyntheticEvent) => {
         // let name: string
         // let value: strings
 
 
-        let name = e.target.name
-        let value = e.target.value
+        const target = e.currentTarget as typeof e.currentTarget & {
+            name: string;
+            value: string;
+        };
+        let name = target.name
+        let value = target.value
         dispatch({ type: ActionKind.SEARCH_PRODUCTS, payload: { name, value } })
 
 
