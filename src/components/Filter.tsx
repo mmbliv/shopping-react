@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import { useFilterContext } from '../context/filter_context'
 import { getUniqueFilterItem } from '../utils/helper'
 import CheckIcon from '@mui/icons-material/Check'
+import Slider from '@mui/material/Slider';
+import { getTheMaxPrice } from '../utils/helper'
+import { formatPrice } from '../utils/helper'
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 const Filter = () => {
@@ -14,10 +19,24 @@ const Filter = () => {
     const chooseColor = (color: string, e: React.SyntheticEvent) => {
         setMainColor(color)
         searchProducts(e)
+    }
+    const [priceValue, setPriceValue] = useState(0)
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        if (typeof newValue === 'number') {
+            setPriceValue(newValue);
+        }
+    }
+    const [freeShipping, setFreeShipping] = useState(true)
+    const chooseFreeShipping = (e: React.SyntheticEvent) => {
+        setFreeShipping(!freeShipping)
+        searchProducts(e)
 
     }
+
+
     return (
         <Wrapper>
+            {/* input search filter */}
             <form onSubmit={(e) => e.preventDefault()} >
                 <div className='input-control'>
                     <input
@@ -28,7 +47,7 @@ const Filter = () => {
                         onChange={searchProducts} />
                 </div>
             </form>
-
+            {/* category search filter */}
             <form className='category'>
                 <label ><h4>Category</h4></label>
                 <select
@@ -47,6 +66,7 @@ const Filter = () => {
                     })}
                 </select>
             </form>
+            {/* company search filter */}
             <form>
                 <label><h4>Company</h4></label>
                 <select
@@ -67,6 +87,7 @@ const Filter = () => {
                 </select>
 
             </form>
+            {/* color search filter */}
             <div >
                 <h4>Colors: </h4>
                 <div className='colors-container'>
@@ -77,6 +98,7 @@ const Filter = () => {
                                 onClick={(e) => chooseColor(color, e)}
                                 name='color'
                                 value={color}
+                                className={`color-all-btn ${mainColor === 'ALL' ? 'active' : null}`}
 
                             >{color}</button>
                         }
@@ -95,6 +117,32 @@ const Filter = () => {
                     })}
                 </div>
             </div>
+            {/* price search filter */}
+            <div>
+                <h4>Price:</h4>
+                <h5>{formatPrice(priceValue)}</h5>
+                <Slider
+                    max={getTheMaxPrice(all_products)}
+                    min={0}
+                    step={1}
+                    value={priceValue}
+                    onChange={handleChange}
+                />
+            </div>
+            {/* free shipping or not filter */}
+            <div>
+                <FormControlLabel
+                    control={<Checkbox />}
+                    label='Free Shipping'
+                    value={freeShipping}
+                    name='shipping'
+                    onChange={chooseFreeShipping}
+                />
+            </div>
+            {/* clear filter */}
+            <div>
+                <button className='btn' onClick={() => cleanFilter}>clear filter</button>
+            </div>
         </Wrapper >
     )
 }
@@ -105,18 +153,29 @@ display: flex;
 flex-direction: column;
 gap: 1rem;
 
-.category{
+/* .category{
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+} */
+input{
+    height: 2rem;
+    font-size: 1.5rem;
+    width: 100%;
+}
+h4{
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 .category-select{
     border:none;
     width: max-content; 
     padding :0 5px ;
+    
 }
 select{  
     outline: none;
+   
 }
 
 .category-option:checked{
@@ -126,17 +185,30 @@ select{
 }
 .color-btn{
     border-radius:50%;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1rem;
+    width: 1rem;
     border:none;
-    align-self: center;
-    
-   
-   
+    align-self: center;  
 } 
 .colors-container svg{
-    color: white;    
+    color: white; 
+    font-size: 1rem;
+    /* font-weight:900; */
+}
+.color-all-btn{
+    border:none;
+   
+    
+}
+.active{
+    text-decoration: underline;
+
 }
 
+.colors-container{
+    display: flex;
+    align-items: center;
+    gap:0.5rem
+}
 
 `

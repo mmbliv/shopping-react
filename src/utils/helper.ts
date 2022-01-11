@@ -16,3 +16,13 @@ export const getUniqueFilterItem=(data:productsType[],key:keyType)=>{
     return ['ALL',...new Set(uniqueItem)]
 
 }
+export const getTheMaxPrice=(data:productsType[])=>{
+    let tempMax=0
+    data.forEach((i)=>{
+        if(i.price>tempMax){
+            tempMax=i.price
+        }
+    }
+    )
+    return tempMax
+}
