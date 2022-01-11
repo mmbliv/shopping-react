@@ -152,6 +152,8 @@ const Wrapper = styled.section`
 display: flex;
 flex-direction: column;
 gap: 1rem;
+padding-top: 1rem;
+width: 150px;
 
 /* .category{
     display: flex;
@@ -160,7 +162,7 @@ gap: 1rem;
 } */
 input{
     height: 2rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
     width: 100%;
 }
 h4{

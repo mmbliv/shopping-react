@@ -12,26 +12,28 @@ import { motion } from "framer-motion";
 const Navbar = () => {
   const [openSideBar, setOpenSideBar] = useState(false);
   return (
-    <Wrapper>
+    <Wrapper className="section section-center">
       <div className="nav-header">
-        <Link to="/">
+        <Link to="/" className="logo">
           <img src={logo} alt="logo" />
         </Link>
-        <ul className="nav-links">
-          {links.map((link) => {
-            return (
-              <li key={link.id} >
-                <Link to={link.url}>{link.text}</Link>
-              </li>
-            );
-          })}
-        </ul>
-        <IconButton onClick={() => setOpenSideBar(true)}>
-          <StyledIcon />
-        </IconButton>
-        <div className='cart-login-btn'>
-          <CartBtn />
-          <LoginBtn />
+        <div className="nav-header-btn">
+          <ul className="nav-links">
+            {links.map((link) => {
+              return (
+                <li key={link.id} >
+                  <Link to={link.url}>{link.text}</Link>
+                </li>
+              );
+            })}
+          </ul>
+          <IconButton onClick={() => setOpenSideBar(true)}>
+            <StyledIcon />
+          </IconButton>
+          <div className='cart-login-btn'>
+            <CartBtn />
+            <LoginBtn />
+          </div>
         </div>
       </div>
       <Drawer
@@ -63,18 +65,28 @@ const Navbar = () => {
 export default Navbar;
 
 const Wrapper = styled.nav`
-  padding: 1rem;
+  padding: 1rem; 
+  
 
   .nav-header {
     height: 5rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns:200px 1fr;
     align-items: center;
   }
   .nav-links {
     display: none;
-    width: 30vw;
+    /* width: 30vw; */
     text-transform: capitalize;
+
+  }
+  .nav-header-btn{
+    display: flex;   
+    align-items:center;   
+    justify-content:space-between; 
+    
+    
+       
   }
   .cart-login-btn{
     display: none;
@@ -88,10 +100,18 @@ const Wrapper = styled.nav`
   @media (min-width: 768px) {
     .nav-links {
       display: flex;
-      justify-content: space-between;
+      width: 400px;     
+      justify-content:space-around; 
+      align-items: center;      
+      font-weight: bolder;
+      font-size: large;
+      
+      
     }
     .cart-login-btn{
-      display: block;
+      display:block;
+      
+      
     }
    
   }
@@ -101,13 +121,14 @@ const StyledIcon = styled(MenuIcon)`
     color: var(--clr-primary-1);
     font-weight: 400;
     font-size: xx-large;
+    margin-left: 12rem;
     @media (min-width: 768px){
       display: none;
     }
   }
 `;
 const StyledUl = styled.ul`
-  padding: 5rem;
+  padding: 5rem; 
   li {
     margin-bottom: 2rem;
     text-transform: capitalize;

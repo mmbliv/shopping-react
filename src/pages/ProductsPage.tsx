@@ -23,6 +23,8 @@ const Wrapper = styled.main`
   display: grid;
   gap:3rem 1.5rem;
   margin:4rem auto;
+  
+  
 }
 @media (min-width:768px){
   .products{
