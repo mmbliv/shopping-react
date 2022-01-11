@@ -15,7 +15,9 @@ const AmountBtn: React.FC<Props> = ({ removeItem, addItem, itemCount }) => {
             <IconButton onClick={removeItem}>
                 <RemoveIcon />
             </IconButton>
-            {itemCount}
+            <div>
+                {itemCount}
+            </div>
             <IconButton onClick={addItem}>
                 <AddIcon />
             </IconButton>
@@ -26,10 +28,17 @@ const AmountBtn: React.FC<Props> = ({ removeItem, addItem, itemCount }) => {
 export default AmountBtn
 const Wrapper = styled.div`
 
-    display: flex;
+    display: grid;
     align-items: center;
-    gap:2rem;
+    /* gap:2rem; */
     font-size: x-large;
     font-weight:800;
+    /* width: 100%; */
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+   
+    div{      
+        text-align: center;
+    }
 
 `

@@ -9,11 +9,13 @@ const ProductInfor: React.FC<singleProductType> = ({ name, price, description, s
 
     return (
         <Wrapper className='section' >
-            <h2>{name}</h2>
-            <Stars stars={stars} review={reviews} />
-            <br />
-            <h5>{formatPrice(price)}</h5>
-            <p>{description}</p>
+            <div className='header'>
+                <h2>{name}</h2>
+                <Stars stars={stars} review={reviews} />
+                {/* <br /> */}
+                <h5 className='price'>{formatPrice(price)}</h5>
+                <p>{description}</p>
+            </div>
             <div className='info'>
 
                 <p>
@@ -38,12 +40,17 @@ const ProductInfor: React.FC<singleProductType> = ({ name, price, description, s
 
 export default ProductInfor
 const Wrapper = styled.section`
-
+.header{
+    display: grid;
+    gap:1rem
+}
 .info p{
     display : grid;
     grid-template-columns: 125px 1fr;
 }
-
+.price{
+    color:var(--clr-primary-3)
+}
 span {
   font-weight: 700;
 }

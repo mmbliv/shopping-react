@@ -36,13 +36,14 @@ const FeaturedProducts = () => {
 
 export default FeaturedProducts
 const Wrapper = styled.section`
-.underline,.card{    
+.card{    
     margin:0 auto;
 }
-.title{
-    text-align: center;   
-}
 
+.title{
+    width: max-content;
+    margin:1rem auto;
+}
 
 
 `

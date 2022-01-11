@@ -8,8 +8,7 @@ type Props = {
 }
 
 const Stars: React.FC<Props> = ({ stars, review }) => {
-    console.log(stars)
-    console.log(review)
+
     return (
         <Wrapper>
             <Rating value={stars} readOnly />

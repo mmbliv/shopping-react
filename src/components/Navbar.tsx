@@ -70,9 +70,9 @@ const Wrapper = styled.nav`
 
   .nav-header {
     height: 5rem;
-    display: grid;
-    grid-template-columns:200px 1fr;
-    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   
   }
   .nav-links {
     display: none;
@@ -95,24 +95,32 @@ const Wrapper = styled.nav`
   
   img {
     height: 4rem;
+    
   }
 
   @media (min-width: 768px) {
     .nav-links {
       display: flex;
       width: 400px;     
-      justify-content:space-around; 
+      justify-content:space-between; 
       align-items: center;      
       font-weight: bolder;
-      font-size: large;
-      
-      
+      font-size: large;    
     }
     .cart-login-btn{
-      display:block;
-      
-      
+      display:block;     
     }
+    img{
+      width: 90%;
+    }
+    .nav-header {
+    height: 5rem;
+    display: grid;
+    grid-template-columns:200px 1fr;
+    align-items: center; 
+    gap:1rem  
+  }
+    
    
   }
 `;
@@ -121,7 +129,8 @@ const StyledIcon = styled(MenuIcon)`
     color: var(--clr-primary-1);
     font-weight: 400;
     font-size: xx-large;
-    margin-left: 12rem;
+    
+    /* margin-left: 12rem; */
     @media (min-width: 768px){
       display: none;
     }
@@ -137,7 +146,5 @@ const StyledUl = styled.ul`
 `;
 const SidebarBtn = styled.div`
 margin: 2rem auto;
-
-
 
 `

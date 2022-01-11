@@ -60,6 +60,10 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock }) => {
 
 export default AddToCart
 const Wrapper = styled.div`
+display: grid;
+width: max-content;
+
+
 
 .colors-container{
     display: flex;

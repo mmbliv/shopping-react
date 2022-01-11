@@ -15,8 +15,8 @@ const ListView: React.FC<Props> = ({ products }) => {
                     <img src={product.image} alt={product.name} />
                     <footer>
                         <h5>{product.name}</h5>
-                        <h5>{formatPrice(product.price)}</h5>
-                        <p>{product.description.substring(0, 250)}...</p>
+                        <h5 className='price'>{formatPrice(product.price)}</h5>
+                        <p>{product.description.substring(0, 200)}...</p>
                         <Link to={`/Product/${product.id}`} className='btn'>
                             details
                         </Link>
@@ -33,8 +33,16 @@ export default ListView
 const Wrapper = styled.section`
 display: grid;
 gap: 3rem;
-
-
+.price{
+    color:var(--clr-primary-3)
+}
+footer{
+    display: grid;
+    gap: 0.6rem;
+}
+.btn{
+    width: min-content;
+}
 img{
     height: 220px;
     width: 100%;
