@@ -38,9 +38,9 @@ const initialState: FilterStateType = {
     sort: 'price-lowest',
     filters: {
         search_text: '',
-        company: 'all',
-        category: 'all',
-        color: 'all',
+        company: 'ALL',
+        category: 'ALL',
+        color: 'ALL',
         min_price: 0,
         max_price: 0,
         price: 0,
@@ -79,20 +79,21 @@ export const FilterProvider: React.FC = ({ children }) => {
     const searchProducts = (e: React.SyntheticEvent) => {
         // let name: string
         // let value: strings
-
-
         const target = e.currentTarget as typeof e.currentTarget & {
             name: string;
-            value: string;
+            value: string | number;
         };
         let name = target.name
         let value = target.value
+        if (name === 'price') {
+            value = Number(value)
+        }
         dispatch({ type: ActionKind.SEARCH_PRODUCTS, payload: { name, value } })
 
 
     }
     const cleanFilter = () => {
-
+        dispatch({ type: ActionKind.CLEAR_FILTERS })
     }
 
     return (

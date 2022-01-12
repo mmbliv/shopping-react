@@ -1,16 +1,30 @@
-import React from 'react'
+
 import { ActionKind } from './products_reducer'
 import { FilterStateType } from '../context/filter_context'
 import { productsType } from '../context/products_context'
 type ActionType = {
     type: ActionKind;
-    payload?: string | productsType[] | { name: string, value: string }
+    payload?: string | productsType[] | { name: string, value: string | number }
 }
 
 const filter_reducer = (state: FilterStateType, action: ActionType): FilterStateType => {
     if (action.type === ActionKind.FILTER_PRODUCT) {
         if (Array.isArray(action.payload)) {
-            return { ...state, filter_products: [...action.payload!], all_products: [...action.payload!] }
+            let maxPrice = 0
+            let minPrice!: number
+            action.payload.forEach((i) => {
+                if (i.price > maxPrice) {
+                    maxPrice = i.price
+                }
+                if (!minPrice) {
+                    minPrice = i.price
+                } else {
+                    if (i.price < minPrice) {
+                        minPrice = i.price
+                    }
+                }
+            })
+            return { ...state, filter_products: [...action.payload!], all_products: [...action.payload!], filters: { ...state.filters, max_price: maxPrice, min_price: minPrice } }
         }
     }
     if (action.type === ActionKind.SEARCH_PRODUCTS) {
@@ -55,11 +69,26 @@ const filter_reducer = (state: FilterStateType, action: ActionType): FilterState
             )
         }
 
+
         return { ...state, filter_products: tempProducts }
 
     }
     if (action.type === ActionKind.FILTER_START) {
 
+
+    }
+    if (action.type === ActionKind.CLEAR_FILTERS) {
+        return {
+            ...state, filters: {
+                ...state.filters,
+                search_text: '',
+                company: 'ALL',
+                category: 'ALL',
+                color: 'ALL',
+                price: state.filters.max_price,
+                shipping: false
+            }
+        }
     }
     return state
 }
