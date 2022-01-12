@@ -310,7 +310,7 @@ const Wrapper = styled.div`
 .main-img-container{    
     position: relative;
     height: 300px;  
-    overflow: hidden;
+    overflow: hidden; 
 
     background:black ;
     border-radius: var(--radius);
@@ -370,8 +370,8 @@ img:hover+.btns{
 }
 .small-img-container img{  
     height: 80px;
-    width: 100%;
-    object-fit:cover;
+    width: 100px;
+    /* object-fit:cover; */
     /* position: absolute;*/
    
 }
@@ -382,6 +382,7 @@ img:hover+.btns{
     justify-content:space-around;      
     align-items: center;
     background:white;
+
     
     
     
@@ -391,14 +392,14 @@ img:hover+.btns{
     overflow: hidden;
     height: 80px;
     width: 90px;
+    /* object-fit:cover; */
     
     
 }
 #smimg{
     position: absolute;
+    object-fit:cover;
     
-   
-
 }
 button{
     border:none;
@@ -406,6 +407,7 @@ button{
 }
 img{
     border-radius: var(--radius);
+    
 }
 @media (min-width: 992px){
     width: 100%;
