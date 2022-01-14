@@ -15,7 +15,9 @@ export type productsType = {
     featured?: boolean;
     single_quantity?: number;
     choosed_color?: string;
-    single_total_price?: number
+    single_total_price?: number;
+    stock: number
+
 
 }
 export type singleProductType = {

@@ -53,7 +53,10 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock }) => {
 
             <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />
             <br />
-            <button className='btn' onClick={() => addCart(itemCount, mainColor, id)}>
+            <button className='btn'
+                onClick={() => addCart(itemCount, mainColor, id, stock)}
+                disabled={itemCount === 0}
+            >
                 add to cart
             </button>
         </Wrapper>
