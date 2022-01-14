@@ -1,23 +1,19 @@
 import React, { useContext, useEffect, useReducer } from "react"
-import { productsType } from './products_context'
+import { singleProductType, productsType } from './products_context'
 import reducer from '../reducers/cart_reducer'
 import { ActionKind } from '../reducers/products_reducer'
 import { useProductsContext } from "./products_context"
-interface CartSingleStateType extends productsType {
-    single_quantity: number;
-    choosed_color: string;
-    single_total_price: number
 
-}
 export type CartStateType = {
     all_products: productsType[];
     total_price: number;
     total_quantity: number;
-    cart_products: CartSingleStateType[];
+    cart_products: productsType[];
     shipping_fee: number;
     addCart: (amount: number, color: string, id: string) => void
 
 }
+
 const initialState: CartStateType = {
     all_products: [],
     cart_products: [],
@@ -32,10 +28,10 @@ export const CartProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
     const { products } = useProductsContext()
     useEffect(() => {
-        dispatch({ type: ActionKind.LOAD_CART_PRODUCTS, payload: products })
+        dispatch({ type: ActionKind.LOAD_CART_PRODUCTS, payload: { kind: 'loadCartProducts', products } })
     }, [products])
     const addCart = (amount: number, color: string, id: string) => {
-        dispatch({ type: ActionKind.ADD_CART, payload: { amount, color, id } })
+        dispatch({ type: ActionKind.ADD_CART, payload: { kind: 'addToCart', amount, color, id } })
     }
     return (
         <CartContext.Provider value={{ ...state, addCart }}>

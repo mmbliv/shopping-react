@@ -13,6 +13,10 @@ export type productsType = {
     description: string;
     category: string;
     featured?: boolean;
+    single_quantity?: number;
+    choosed_color?: string;
+    single_total_price?: number
+
 }
 export type singleProductType = {
     category: string;
@@ -27,7 +31,8 @@ export type singleProductType = {
     shipping: boolean;
     stars: number;
     stock: number;
-    imgUrls: string[]
+    imgUrls: string[];
+
 }
 export type initialStateType = {
     products_loading: boolean;
