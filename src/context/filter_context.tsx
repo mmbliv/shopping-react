@@ -81,12 +81,16 @@ export const FilterProvider: React.FC = ({ children }) => {
         // let value: strings
         const target = e.currentTarget as typeof e.currentTarget & {
             name: string;
-            value: string | number;
+            value: string | number | boolean;
         };
         let name = target.name
         let value = target.value
         if (name === 'price') {
             value = Number(value)
+        }
+        if (name === 'shipping') {
+            value = (e as React.ChangeEvent<HTMLInputElement>).target.checked
+
         }
         dispatch({ type: ActionKind.SEARCH_PRODUCTS, payload: { name, value } })
 

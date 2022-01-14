@@ -3,7 +3,7 @@ import { products_url as url } from "../utils/constant";
 import reducer from "../reducers/products_reducer";
 import { ActionKind } from "../reducers/products_reducer";
 export type productsType = {
-    id: number;
+    id: string;
     name: string;
     price: number;
     image: string;

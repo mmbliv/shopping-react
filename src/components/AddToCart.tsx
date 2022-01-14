@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from "styled-components"
 import CheckIcon from '@mui/icons-material/Check'
 import AmountBtn from './AmountBtn'
+import { useCartContext } from '../context/cart_context'
 
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 
 
 const AddToCart: React.FC<Props> = ({ colors, id, stock }) => {
+    const { addCart } = useCartContext()
     const [mainColor, setMainColor] = useState(colors[0])
     const [itemCount, setItemCount] = useState(0)
     const removeItem = () => {
@@ -51,7 +53,7 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock }) => {
 
             <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />
             <br />
-            <button className='btn'>
+            <button className='btn' onClick={() => addCart(itemCount, mainColor, id)}>
                 add to cart
             </button>
         </Wrapper>

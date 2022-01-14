@@ -4,7 +4,7 @@ import { FilterStateType } from '../context/filter_context'
 import { productsType } from '../context/products_context'
 type ActionType = {
     type: ActionKind;
-    payload?: string | productsType[] | { name: string, value: string | number }
+    payload?: string | productsType[] | { name: string, value: string | number | boolean }
 }
 
 const filter_reducer = (state: FilterStateType, action: ActionType): FilterStateType => {
@@ -74,7 +74,7 @@ const filter_reducer = (state: FilterStateType, action: ActionType): FilterState
 
     }
     if (action.type === ActionKind.FILTER_START) {
-        const { search_text, company, color, category, price, max_price, min_price } = state.filters
+        const { search_text, company, color, category, price, max_price, min_price, shipping } = state.filters
         let tempProducts = [...state.all_products]
         if (search_text) {
             tempProducts = tempProducts.filter((item) => {
@@ -101,6 +101,12 @@ const filter_reducer = (state: FilterStateType, action: ActionType): FilterState
             tempProducts = tempProducts.filter((item) => {
                 return item.price >= min_price && item.price <= price
             })
+        }
+        if (shipping) {
+            tempProducts = tempProducts.filter((item) => {
+                return item.shipping === true
+            })
+
         }
 
         return { ...state, filter_products: tempProducts }

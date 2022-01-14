@@ -8,7 +8,7 @@ type Props = {
     image: string;
     name: string;
     price: number;
-    id: number
+    id: string
 }
 
 const Product: React.FC<Props> = ({ image, name, price, id }) => {

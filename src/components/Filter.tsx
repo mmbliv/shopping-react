@@ -21,12 +21,13 @@ const Filter = () => {
         searchProducts(e)
     }
 
-    const [freeShipping, setFreeShipping] = useState(true)
-    const chooseFreeShipping = (e: React.SyntheticEvent) => {
-        setFreeShipping(!freeShipping)
-        searchProducts(e)
+    // const [freeShipping, setFreeShipping] = useState(false)
+    // const chooseFreeShipping = (e: React.SyntheticEvent) => {
+    //     console.log('hi')
+    //     setFreeShipping(!freeShipping)
+    //     searchProducts(e)
 
-    }
+    // }
 
 
     return (
@@ -127,12 +128,27 @@ const Filter = () => {
                 </div>
                 {/* free shipping or not filter */}
                 <div>
-                    <FormControlLabel
-                        control={<Checkbox />}
-                        label='Free Shipping'
-                        value={freeShipping}
-                        name='shipping'
+                    <label htmlFor="shipping">Free Shipping</label>
+                    {/* <input
+                        type="checkbox"
+                        id='shipping'
+                        name="shipping"
+                        checked={freeShipping}
                         onChange={chooseFreeShipping}
+                        // onChange={searchProducts}
+                        value={freeShipping.toString()}
+                    /> */}
+                    <FormControlLabel
+                        control={<Checkbox
+                            checked={filters.shipping}
+                            value={filters.shipping}
+                            name='shipping'
+                            onChange={searchProducts}
+                        />}
+                        label='Free Shipping'
+
+                    // checked={filters.shipping}
+
                     />
                 </div>
             </form>
