@@ -34,10 +34,10 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
     if (action.type === ActionKind.ADD_CART && action.payload?.kind === 'addToCart') {
         const { id, amount, color, stock } = action.payload
 
-        if (state.cart_products.some(product => product.id === id)) {
+        if (state.cart_products.some(product => product.id === id && product.choosed_color === color)) {
 
             let addProducts = state.cart_products.map((product) => {
-                if (product.id === id && product.choosed_color === color) {
+                if (product.id === id) {
                     return { ...product, single_quantity: product.single_quantity! + amount }
                 } else {
                     return { ...product }

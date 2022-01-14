@@ -103,7 +103,6 @@ h5 {
   font-size: 0.875rem;
 }
 p {
-  margin-bottom: 1.25rem;
   color: var(--clr-grey-3);
 }
 @media screen and (min-width: 800px) {
