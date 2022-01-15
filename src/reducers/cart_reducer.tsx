@@ -16,21 +16,31 @@ type loadCartProducts = {
 }
 type addItem = {
     kind: 'addItem';
-    id: string
+    id: string;
+    color: string
 }
 type removeItem = {
     kind: 'removeItem';
-    id: string
+    id: string;
+    color: string
+}
+type deleteProduct = {
+    kind: 'deleteProduct';
+    id: string;
+    color: string
 }
 type ActionType = {
     type: ActionKind;
-    payload?: addToCart | loadCartProducts | addItem | removeItem
+    payload?: addToCart | loadCartProducts | addItem | removeItem | deleteProduct
 }
 
 const cart_reducer = (state: CartStateType, action: ActionType): CartStateType => {
     if (action.type === ActionKind.LOAD_CART_PRODUCTS && action.payload?.kind === 'loadCartProducts') {
         return { ...state, all_products: action.payload.products }
     }
+    // if(action.type===ActionKind.LOAD_ADDED_CART_PRODUCTS){
+    //     return {...state,cart_products:[...state.cart_products]
+    // }
     if (action.type === ActionKind.ADD_CART && action.payload?.kind === 'addToCart') {
         const { id, amount, color, stock } = action.payload
 
@@ -53,9 +63,9 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
 
     }
     if (action.type === ActionKind.ADD_ITEM && action.payload?.kind === 'addItem') {
-        const { id } = action.payload
+        const { id, color } = action.payload
         let products = state.cart_products.map((product) => {
-            if (product.id === id && product.single_quantity! < product.stock) {
+            if (product.id === id && product.choosed_color === color && product.single_quantity! < product.stock) {
                 return { ...product, single_quantity: product.single_quantity! + 1 }
             } else {
                 return { ...product }
@@ -67,9 +77,9 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
 
     }
     if (action.type === ActionKind.REMOVE_ITEM && action.payload?.kind === 'removeItem') {
-        const { id } = action.payload
+        const { id, color } = action.payload
         let products = state.cart_products.map((product) => {
-            if (product.id === id && product.single_quantity! > 0) {
+            if (product.id === id && product.choosed_color === color && product.single_quantity! > 0) {
                 return { ...product, single_quantity: product.single_quantity! - 1 }
             } else {
                 return { ...product }
@@ -79,6 +89,11 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
 
         return { ...state, cart_products: products }
 
+    }
+    if (action.type === ActionKind.DELETE_PRODUCT && action.payload?.kind === 'deleteProduct') {
+        const { id, color } = action.payload
+        let products = state.cart_products.filter((product) => { return (product.id === id && product.choosed_color === color) === false })
+        return { ...state, cart_products: products }
     }
     return { ...state }
 }

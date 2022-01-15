@@ -7,12 +7,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 type Props = {
     products: productsType[];
-    addItem: (id: string) => void;
-    removeItem: (id: string) => void;
+    addItem: (id: string, color: string) => void;
+    removeItem: (id: string, color: string) => void;
+    deleteProduct: (id: string, color: string) => void
 }
 
 
-const CartProducts: React.FC<Props> = ({ products, addItem, removeItem }) => {
+const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deleteProduct }) => {
 
 
 
@@ -31,8 +32,8 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem }) => {
                             <h5 className='price'>{formatPrice(product.price)}</h5>
                         </div>
                     </div>
-                    <AmountBtn removeItem={() => removeItem(product.id)} addItem={() => addItem(product.id)} itemCount={product.single_quantity!} />
-                    <IconButton>
+                    <AmountBtn removeItem={() => removeItem(product.id, product.choosed_color!)} addItem={() => addItem(product.id, product.choosed_color!)} itemCount={product.single_quantity!} />
+                    <IconButton onClick={() => deleteProduct(product.id, product.choosed_color!)}>
                         <DeleteIcon />
                     </IconButton>
 
@@ -46,7 +47,7 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem }) => {
 export default CartProducts
 const Wrapper = styled.section`
 display: grid;
-gap:1rem;
+gap:3rem;
 img{
 height: 6rem;
 width: 6rem;

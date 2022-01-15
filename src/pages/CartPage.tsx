@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { useCartContext } from "../context/cart_context";
 
 const CartPage = () => {
-  const { cart_products, addItem, removeItem } = useCartContext()
-  return <Wrapper>
-    <CartProducts products={cart_products} addItem={addItem} removeItem={removeItem} />
+  const { cart_products, addItem, removeItem, deleteProduct } = useCartContext()
+  return <Wrapper className="page-100">
+    <CartProducts products={cart_products} addItem={addItem} removeItem={removeItem} deleteProduct={deleteProduct} />
   </Wrapper>;
 };
 
