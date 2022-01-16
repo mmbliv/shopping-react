@@ -5,12 +5,19 @@ import { useCartContext } from "../context/cart_context";
 
 const CartPage = () => {
   const { cart_products, addItem, removeItem, deleteProduct } = useCartContext()
+
+
   return <Wrapper className="page-100">
-    <CartProducts products={cart_products} addItem={addItem} removeItem={removeItem} deleteProduct={deleteProduct} />
+    {cart_products.length === 0 ? <h1>The cart is empty</h1> : <CartProducts products={cart_products} addItem={addItem} removeItem={removeItem} deleteProduct={deleteProduct} />}
+
   </Wrapper>;
 };
 
 export default CartPage
 const Wrapper = styled.section`
+h1{
+  text-align: center;
+  color:var(--clr-grey-5)
+}
 
 `

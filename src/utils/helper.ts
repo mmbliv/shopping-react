@@ -1,4 +1,5 @@
 import { productsType } from "../context/products_context"
+import { CartStateType } from "../context/cart_context"
 export const formatPrice=(number:number)=>{
     return new Intl.NumberFormat('en-US',{
         style:'currency',
@@ -25,4 +26,11 @@ export const getTheMaxPrice=(data:productsType[])=>{
     }
     )
     return tempMax
+}
+export const calculateTotalQuantity=(products:productsType[])=>{
+   return products.reduce((ack,product)=>ack+product.single_quantity!,0)
+}
+export const calculateTotalPrice=(products:productsType[])=>{
+    return products.reduce((ack,product)=>ack+product.single_total_price!,0 )
+
 }

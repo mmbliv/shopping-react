@@ -32,7 +32,8 @@ const ProductInfor: React.FC<singleProductType> = ({ name, price, description, s
                 </p>
                 <hr />
                 <br />
-                {stock > 0 && <AddToCart id={id} stock={stock} colors={colors} />}
+                {stock > 0 ? <AddToCart id={id} stock={stock} colors={colors} /> : <h5>there is no stock for this ptoduct</h5>
+                }
             </div>
         </Wrapper>
     )

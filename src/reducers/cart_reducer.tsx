@@ -1,8 +1,8 @@
-import React from 'react'
-import products_reducer, { ActionKind } from './products_reducer'
+
+import { ActionKind } from './products_reducer'
 import { CartStateType } from '../context/cart_context'
-import { singleProductType, productsType } from '../context/products_context'
-import Product from '../components/Product'
+import { productsType } from '../context/products_context'
+
 type addToCart = {
     kind: 'addToCart';
     amount: number;
@@ -47,7 +47,7 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
         if (state.cart_products.some(product => product.id === id && product.choosed_color === color)) {
 
             let addProducts = state.cart_products.map((product) => {
-                if (product.id === id) {
+                if (product.id === id && (product.single_quantity! + amount) < stock) {
                     return { ...product, single_quantity: product.single_quantity! + amount }
                 } else {
                     return { ...product }
@@ -66,7 +66,7 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
         const { id, color } = action.payload
         let products = state.cart_products.map((product) => {
             if (product.id === id && product.choosed_color === color && product.single_quantity! < product.stock) {
-                return { ...product, single_quantity: product.single_quantity! + 1 }
+                return { ...product, single_quantity: product.single_quantity! + 1, single_total_price: (product.single_quantity! + 1) * product.price }
             } else {
                 return { ...product }
             }
@@ -80,7 +80,7 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
         const { id, color } = action.payload
         let products = state.cart_products.map((product) => {
             if (product.id === id && product.choosed_color === color && product.single_quantity! > 0) {
-                return { ...product, single_quantity: product.single_quantity! - 1 }
+                return { ...product, single_quantity: product.single_quantity! - 1, single_total_price: (product.single_quantity! - 1) * product.price }
             } else {
                 return { ...product }
             }
