@@ -23,7 +23,8 @@ export enum ActionKind{
     LOAD_CART_PRODUCTS='LOAD_CART_PRODUCTS',
     ADD_ITEM='ADD_ITEM',
     REMOVE_ITEM='REMOVE_ITEM',
-    DELETE_PRODUCT='DELETE_PRODUCT'
+    DELETE_PRODUCT='DELETE_PRODUCT',
+    ClEAR_CART='CLEAR_CART'
 }
  type ActionType={
      type:ActionKind;

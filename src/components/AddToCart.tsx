@@ -21,6 +21,7 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
     const { addCart } = useCartContext()
     const [mainColor, setMainColor] = useState(colors[0])
     const [itemCount, setItemCount] = useState(0)
+    console.log(itemCount)
     const { cart_products } = useCartContext()
     const removeItem = () => {
         if (itemCount > 0) {
@@ -37,15 +38,28 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
         setItemCount(0)
     }
     // use add as the key to control the animation of the added item
+    const [disableBtn, setDisableBtn] = useState(false)
+    const [noMoreStock, setNoMoreStock] = useState(false)
     const [add, setAdd] = useState(0)
     const clickBtnHandler = (itemCount: number, mainColor: string, id: string, stock: number) => {
         addCart(itemCount, mainColor, id, stock)
         const itemAmount = findItemsAddedToCart(cart_products, name)
-        if (!itemAmount && (itemCount <= stock)) {
+        if (!itemAmount && (itemCount <= stock) && itemCount !== 0) {
             setAdd(add + 1)
+            setNoMoreStock(false)
         }
-        if (itemAmount && (itemCount + itemAmount < stock)) {
+        if (itemAmount && (itemCount + itemAmount < stock) && itemCount !== 0) {
             setAdd(add + 1)
+            setNoMoreStock(false)
+        }
+        if ((!itemAmount && (itemCount >= stock)) || (itemAmount && (itemCount + itemAmount >= stock))) {
+            setNoMoreStock(true)
+        }
+        if (itemCount === 0) {
+            setDisableBtn(true)
+            setNoMoreStock(false)
+        } else {
+            setDisableBtn(false)
         }
 
     }
@@ -65,52 +79,62 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
     }
     return (
         <Wrapper>
-            <p >
-                <span>Colors: </span>
-                <div className='colors-container'>
-                    {colors.map((color, index) => {
-                        return <button
-                            key={index}
-                            className='color-btn'
-                            style={{ background: color }}
-                            onClick={() => chooseColor(color)}
-                        >
-                            {mainColor === color ? <CheckIcon /> : null}
-                        </button>
+            <div className='add-cart'>
 
-                    })}
-                </div>
-            </p>
+                <p >
+                    <span>Colors: </span>
+                    <div className='colors-container'>
+                        {colors.map((color, index) => {
+                            return <button
+                                key={index}
+                                className='color-btn'
+                                style={{ background: color }}
+                                onClick={() => chooseColor(color)}
+                            >
+                                {mainColor === color ? <CheckIcon /> : null}
+                            </button>
 
-            <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />
+                        })}
+                    </div>
+                </p>
 
-            <button className='btn'
-                onClick={() => clickBtnHandler(itemCount, mainColor, id, stock)}
-                disabled={itemCount === 0}
-            >
-                <AnimatePresence initial={false}>
-                    <motion.img
-                        key={add}
-                        src={imgUrls[0]}
-                        className='sm-img'
-                        variants={imgMotion}
-                        initial='hidden'
-                        animate='visible'
+                <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />
 
-                    />
-                </AnimatePresence>
-                add to cart
-            </button>
+                <button className='btn'
+                    onClick={() => clickBtnHandler(itemCount, mainColor, id, stock)}
+                // disabled={disableBtn}
+                >
+                    <AnimatePresence initial={false}>
+                        <motion.img
+                            key={add}
+                            src={imgUrls[0]}
+                            className='sm-img'
+                            variants={imgMotion}
+                            initial='hidden'
+                            animate='visible'
+
+                        />
+                    </AnimatePresence>
+                    add to cart
+                </button>
+            </div>
+            {disableBtn && <h5 id='reminder'>Please choose product first</h5>}
+            {noMoreStock && <h5 id='reminder'>No more stock for this product</h5>}
         </Wrapper>
     )
 }
 
 export default AddToCart
 const Wrapper = styled.div`
-display: grid;
-width: max-content;
-margin-top: 1rem;
-gap:1rem;
+.add-cart{
+    display: grid;
+    width: max-content;
+    margin-top: 1rem;
+    gap:1rem;
+}
+#reminder{
+    margin-top:1rem ;
+}
 .colors-container{
     display: flex;
     align-items: center;

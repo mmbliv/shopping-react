@@ -6,15 +6,17 @@ import AmountBtn from './AmountBtn'
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { calculateTotalPrice } from '../utils/helper'
+import { Link } from 'react-router-dom'
 type Props = {
     products: productsType[];
     addItem: (id: string, color: string) => void;
     removeItem: (id: string, color: string) => void;
-    deleteProduct: (id: string, color: string) => void
+    deleteProduct: (id: string, color: string) => void;
+    clearCart: () => void;
 }
 
 
-const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deleteProduct }) => {
+const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deleteProduct, clearCart }) => {
 
 
 
@@ -35,7 +37,9 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deletePr
             {products.map((product) => {
                 return <div key={product.id} className='cart-products'>
                     <div className='product-card'>
-                        <img src={product.image} alt="img" />
+                        <Link to={`/product/${product.id}`}>
+                            <img src={product.image} alt="img" />
+                        </Link>
                         <div className='card-footer'>
 
                             <h5>{product.name}</h5>
@@ -59,8 +63,10 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deletePr
             })}
             <hr />
             <div className='btns'>
-                <button className='btn'>continue shopping</button>
-                <button className='btn'>clear shopping cart</button>
+                <Link to='/products'>
+                    <button className='btn'>continue shopping</button>
+                </Link>
+                <button className='btn' onClick={clearCart}>clear shopping cart</button>
             </div>
             <div className='checkout-box'>
 

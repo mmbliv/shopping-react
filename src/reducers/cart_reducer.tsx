@@ -43,11 +43,11 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
     // }
     if (action.type === ActionKind.ADD_CART && action.payload?.kind === 'addToCart') {
         const { id, amount, color, stock } = action.payload
-
+        // check if the item is already exist in the cart
         if (state.cart_products.some(product => product.id === id && product.choosed_color === color)) {
 
             let addProducts = state.cart_products.map((product) => {
-                if (product.id === id && (product.single_quantity! + amount) < stock) {
+                if (product.id === id && (product.single_quantity! + amount) < stock && product.choosed_color === color) {
                     return { ...product, single_quantity: product.single_quantity! + amount }
                 } else {
                     return { ...product }
@@ -94,6 +94,10 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
         const { id, color } = action.payload
         let products = state.cart_products.filter((product) => { return (product.id === id && product.choosed_color === color) === false })
         return { ...state, cart_products: products }
+    }
+    if (action.type === ActionKind.ClEAR_CART) {
+        return { ...state, cart_products: [] }
+
     }
     return { ...state }
 }

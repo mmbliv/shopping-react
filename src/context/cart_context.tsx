@@ -7,27 +7,27 @@ import { useProductsContext } from "./products_context"
 
 export type CartStateType = {
     all_products: productsType[];
-    total_price: number;
-    total_quantity: number;
+
     cart_products: productsType[];
     shipping_fee: number;
     addCart: (amount: number, color: string, id: string, stock: number) => void;
     addItem: (id: string, color: string) => void;
     removeItem: (id: string, color: string) => void;
-    deleteProduct: (id: string, color: string) => void
+    deleteProduct: (id: string, color: string) => void;
+    clearCart: () => void
 
 }
 
 const initialState: CartStateType = {
     all_products: [],
     cart_products: [],
-    total_price: 0,
-    total_quantity: 0,
+
     shipping_fee: 0,
     addCart: (amount, color, id, stock) => { },
     addItem: (id, color) => { },
     removeItem: (id, color) => { },
-    deleteProduct: (id, color) => { }
+    deleteProduct: (id, color) => { },
+    clearCart: () => { }
 }
 const CartContext = React.createContext(initialState)
 
@@ -51,8 +51,11 @@ export const CartProvider: React.FC = ({ children }) => {
         dispatch({ type: ActionKind.DELETE_PRODUCT, payload: { kind: 'deleteProduct', id, color } })
 
     }
+    const clearCart = () => {
+        dispatch({ type: ActionKind.ClEAR_CART })
+    }
     return (
-        <CartContext.Provider value={{ ...state, addCart, addItem, removeItem, deleteProduct }}>
+        <CartContext.Provider value={{ ...state, addCart, addItem, removeItem, deleteProduct, clearCart }}>
             {children}
         </CartContext.Provider>
     )
