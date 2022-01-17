@@ -34,3 +34,11 @@ export const calculateTotalPrice=(products:productsType[])=>{
     return products.reduce((ack,product)=>ack+product.single_total_price!,0 )
 
 }
+export const findItemsAddedToCart=(products:productsType[],name:string)=>{
+    for(let i=0;i<products.length;i++){
+        if(products[i].name===name){
+            return products[i].single_quantity!
+        }
+    }
+
+}

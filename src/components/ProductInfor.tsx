@@ -5,7 +5,8 @@ import Stars from './Stars'
 import { formatPrice } from '../utils/helper'
 import AddToCart from './AddToCart'
 
-const ProductInfor: React.FC<singleProductType> = ({ name, price, description, stock, stars, reviews, id, company, colors }) => {
+
+const ProductInfor: React.FC<singleProductType> = ({ name, price, description, stock, stars, reviews, id, company, colors, imgUrls }) => {
 
     return (
         <Wrapper className='section' >
@@ -31,8 +32,15 @@ const ProductInfor: React.FC<singleProductType> = ({ name, price, description, s
                     {company}
                 </p>
                 <hr />
-                <br />
-                {stock > 0 ? <AddToCart id={id} stock={stock} colors={colors} /> : <h5>there is no stock for this ptoduct</h5>
+                {stock > 0 ?
+                    <AddToCart
+                        id={id}
+                        stock={stock}
+                        colors={colors}
+                        imgUrls={imgUrls}
+                        name={name}
+
+                    /> : <h5>there is no stock for this ptoduct</h5>
                 }
             </div>
         </Wrapper>
@@ -48,9 +56,15 @@ const Wrapper = styled.section`
 .info p{
     display : grid;
     grid-template-columns: 125px 1fr;
+    
 }
 .price{
     color:var(--clr-primary-3)
+}
+.info{
+    padding-top: 1rem;
+    display: grid;
+    gap:1rem;
 }
 span {
   font-weight: 700;
