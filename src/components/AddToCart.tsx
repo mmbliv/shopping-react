@@ -41,8 +41,10 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
     const clickBtnHandler = (itemCount: number, mainColor: string, id: string, stock: number) => {
         addCart(itemCount, mainColor, id, stock)
         const itemAmount = findItemsAddedToCart(cart_products, name)
-        console.log(itemAmount)
-        if (itemAmount! + itemCount < stock) {
+        if (!itemAmount && (itemCount <= stock)) {
+            setAdd(add + 1)
+        }
+        if (itemAmount && (itemCount + itemAmount < stock)) {
             setAdd(add + 1)
         }
 

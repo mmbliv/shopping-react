@@ -35,10 +35,9 @@ export const calculateTotalPrice=(products:productsType[])=>{
 
 }
 export const findItemsAddedToCart=(products:productsType[],name:string)=>{
-    for(let i=0;i<products.length;i++){
-        if(products[i].name===name){
-            return products[i].single_quantity!
-        }
-    }
+   let p=products.find(product=>product.name===name)
+   if(p){
+       return p.single_quantity
+   }
 
 }
