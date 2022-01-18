@@ -99,7 +99,7 @@ const cart_reducer = (state: CartStateType, action: ActionType): CartStateType =
         return { ...state, cart_products: [] }
 
     }
-    return { ...state }
+    throw new Error(`No Matching "${action.type}" - action type`)
 }
 
 export default cart_reducer
