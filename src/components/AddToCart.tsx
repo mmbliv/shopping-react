@@ -8,17 +8,7 @@ import { findItemsAddedToCart } from '../utils/helper'
 import { singleProductType } from '../context/products_context'
 
 
-
-// type Props = {
-//     id: string;
-//     stock: number;
-//     colors: string[];
-//     imgUrls: string[];
-//     name: string
-// }
-
-
-const AddToCart: React.FC<singleProductType> = ({ ...product }) => {
+const AddToCart: React.FC<singleProductType> = (product) => {
     const { colors, id, stock, imgUrls } = product
     const { addCart, cart_products } = useCartContext()
     const [mainColor, setMainColor] = useState(colors[0])

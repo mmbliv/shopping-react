@@ -1,5 +1,4 @@
 import React from 'react'
-import { productsType } from '../context/products_context'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helper'
 import AmountBtn from './AmountBtn'
@@ -10,7 +9,7 @@ import { CartStateType } from '../context/cart_context'
 
 
 
-const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, total_quantity, checkout_price }) => {
+const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, checkout_price }) => {
 
 
 
