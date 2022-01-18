@@ -4,13 +4,13 @@ import { Badge, IconButton } from '@mui/material';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/cart_context';
-import { calculateTotalQuantity } from '../utils/helper';
+
 
 const CartBtn = () => {
-    const { cart_products } = useCartContext()
+    const { cart_products, total_quantity } = useCartContext()
     return (
         <IconButton>
-            <Badge badgeContent={calculateTotalQuantity(cart_products)}>
+            <Badge badgeContent={total_quantity}>
                 <Link to='/cart'>
                     <StyledIcon />
                 </Link>

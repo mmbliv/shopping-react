@@ -6,7 +6,8 @@ import { formatPrice } from '../utils/helper'
 import AddToCart from './AddToCart'
 
 
-const ProductInfor: React.FC<singleProductType> = ({ name, price, description, stock, stars, reviews, id, company, colors, imgUrls }) => {
+const ProductInfor: React.FC<singleProductType> = ({ ...product }) => {
+    const { name, price, description, stock, stars, reviews, id, company, colors, imgUrls } = product
 
     return (
         <Wrapper className='section' >
@@ -34,11 +35,7 @@ const ProductInfor: React.FC<singleProductType> = ({ name, price, description, s
                 <hr />
                 {stock > 0 ?
                     <AddToCart
-                        id={id}
-                        stock={stock}
-                        colors={colors}
-                        imgUrls={imgUrls}
-                        name={name}
+                        {...product}
 
                     /> : <h5>there is no stock for this ptoduct</h5>
                 }

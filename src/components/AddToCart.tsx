@@ -5,27 +5,30 @@ import AmountBtn from './AmountBtn'
 import { useCartContext } from '../context/cart_context'
 import { motion, AnimatePresence } from 'framer-motion'
 import { findItemsAddedToCart } from '../utils/helper'
+import { singleProductType } from '../context/products_context'
 
 
 
-type Props = {
-    id: string;
-    stock: number;
-    colors: string[];
-    imgUrls: string[];
-    name: string
-}
+// type Props = {
+//     id: string;
+//     stock: number;
+//     colors: string[];
+//     imgUrls: string[];
+//     name: string
+// }
 
 
-const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
-    const { addCart } = useCartContext()
+const AddToCart: React.FC<singleProductType> = ({ ...product }) => {
+    const { colors, id, stock, imgUrls } = product
+    const { addCart, cart_products } = useCartContext()
     const [mainColor, setMainColor] = useState(colors[0])
     const [itemCount, setItemCount] = useState(0)
-    console.log(itemCount)
-    const { cart_products } = useCartContext()
+
+
     const removeItem = () => {
         if (itemCount > 0) {
             setItemCount(itemCount - 1)
+            setNoMoreStock(false)
         }
     }
     const addItem = () => {
@@ -36,15 +39,16 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
     const chooseColor = (color: string) => {
         setMainColor(color)
         setItemCount(0)
+        setNoMoreStock(false)
     }
     // use add as the key to control the animation of the added item
     const [disableBtn, setDisableBtn] = useState(false)
     const [noMoreStock, setNoMoreStock] = useState(false)
     const [add, setAdd] = useState(0)
-    const clickBtnHandler = (itemCount: number, mainColor: string, id: string, stock: number) => {
-        addCart(itemCount, mainColor, id, stock)
-        const itemAmount = findItemsAddedToCart(cart_products, name)
-        if (!itemAmount && (itemCount <= stock) && itemCount !== 0) {
+    const clickBtnHandler = () => {
+        addCart(itemCount, mainColor, product)
+        const itemAmount = findItemsAddedToCart(cart_products, mainColor, id)
+        if (!itemAmount && (itemCount < stock) && itemCount !== 0) {
             setAdd(add + 1)
             setNoMoreStock(false)
         }
@@ -101,7 +105,7 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
                 <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />
 
                 <button className='btn'
-                    onClick={() => clickBtnHandler(itemCount, mainColor, id, stock)}
+                    onClick={() => clickBtnHandler()}
                 // disabled={disableBtn}
                 >
                     <AnimatePresence initial={false}>
@@ -119,7 +123,7 @@ const AddToCart: React.FC<Props> = ({ colors, id, stock, imgUrls, name }) => {
                 </button>
             </div>
             {disableBtn && <h5 id='reminder'>Please choose product first</h5>}
-            {noMoreStock && <h5 id='reminder'>No more stock for this product</h5>}
+            {noMoreStock && <h5 id='reminder'>Only {stock} left for this product</h5>}
         </Wrapper>
     )
 }

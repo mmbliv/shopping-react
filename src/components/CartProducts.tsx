@@ -3,20 +3,14 @@ import { productsType } from '../context/products_context'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helper'
 import AmountBtn from './AmountBtn'
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import { calculateTotalPrice } from '../utils/helper'
+import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from '@mui/material/IconButton'
 import { Link } from 'react-router-dom'
-type Props = {
-    products: productsType[];
-    addItem: (id: string, color: string) => void;
-    removeItem: (id: string, color: string) => void;
-    deleteProduct: (id: string, color: string) => void;
-    clearCart: () => void;
-}
+import { CartStateType } from '../context/cart_context'
 
 
-const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deleteProduct, clearCart }) => {
+
+const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, total_quantity, checkout_price }) => {
 
 
 
@@ -38,23 +32,23 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deletePr
                 return <div key={product.id} className='cart-products'>
                     <div className='product-card'>
                         <Link to={`/product/${product.id}`}>
-                            <img src={product.image} alt="img" />
+                            <img src={product.img} alt="img" />
                         </Link>
                         <div className='card-footer'>
 
                             <h5>{product.name}</h5>
                             <p>Color:
-                                <span style={{ background: product.choosed_color }} className='color'></span>
+                                <span style={{ background: product.color }} className='color'></span>
                             </p>
                             <h5 className='price'>{formatPrice(product.price)}</h5>
                         </div>
                     </div>
                     <AmountBtn
-                        removeItem={() => removeItem(product.id, product.choosed_color!)}
-                        addItem={() => addItem(product.id, product.choosed_color!)}
-                        itemCount={product.single_quantity!} />
-                    <h5 className='price-single-total'>{formatPrice(product.price * product.single_quantity!)}</h5>
-                    <IconButton onClick={() => deleteProduct(product.id, product.choosed_color!)} className='icon-btn'>
+                        removeItem={() => removeItem(product.id)}
+                        addItem={() => addItem(product.id)}
+                        itemCount={product.quantity!} />
+                    <h5 className='price-single-total'>{formatPrice(product.price * product.quantity!)}</h5>
+                    <IconButton onClick={() => deleteProduct(product.id)} className='icon-btn'>
                         <DeleteIcon />
                     </IconButton>
 
@@ -71,14 +65,14 @@ const CartProducts: React.FC<Props> = ({ products, addItem, removeItem, deletePr
             <div className='checkout-box'>
 
                 <h5>Subtotal:
-                    <span>{formatPrice(calculateTotalPrice(products))}</span>
+                    <span>{formatPrice(checkout_price)}</span>
                 </h5>
                 <h5>Shipping Fee:
                     <span>{formatPrice(534)}</span>
                 </h5>
                 <hr />
                 <h5 className='total-price'>Order Total:
-                    <span>{formatPrice(calculateTotalPrice(products) + 534)}</span>
+                    <span>{formatPrice(checkout_price + 534)}</span>
                 </h5>
             </div>
             <button className='btn login-btn'>login</button>

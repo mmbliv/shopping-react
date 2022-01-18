@@ -1,105 +1,114 @@
 
 import { ActionKind } from './products_reducer'
-import { CartStateType } from '../context/cart_context'
-import { productsType } from '../context/products_context'
+import { CartStateType, singleProductCartType } from '../context/cart_context'
+import { singleProductType } from '../context/products_context'
 
 type addToCart = {
     kind: 'addToCart';
     amount: number;
     color: string;
-    id: string;
-    stock: number
+    product: singleProductType
 }
-type loadCartProducts = {
-    kind: 'loadCartProducts';
-    products: productsType[]
-}
+
 type addItem = {
     kind: 'addItem';
     id: string;
-    color: string
+
 }
 type removeItem = {
     kind: 'removeItem';
     id: string;
-    color: string
+
 }
 type deleteProduct = {
     kind: 'deleteProduct';
     id: string;
-    color: string
+
 }
 type ActionType = {
     type: ActionKind;
-    payload?: addToCart | loadCartProducts | addItem | removeItem | deleteProduct
+    payload?: addToCart | addItem | removeItem | deleteProduct
 }
 
 const cart_reducer = (state: CartStateType, action: ActionType): CartStateType => {
-    if (action.type === ActionKind.LOAD_CART_PRODUCTS && action.payload?.kind === 'loadCartProducts') {
-        return { ...state, all_products: action.payload.products }
+    if (action.type === ActionKind.CACULATE_PRODUCTS) {
+        const { totalItems, totalPrice } = state.cart_products.reduce((ack, item) => {
+            ack.totalItems += item.quantity
+            ack.totalPrice += item.quantity * item.price
+            return ack
+        }, { totalItems: 0, totalPrice: 0 })
+        return { ...state, checkout_price: totalPrice, total_quantity: totalItems }
     }
-    // if(action.type===ActionKind.LOAD_ADDED_CART_PRODUCTS){
-    //     return {...state,cart_products:[...state.cart_products]
-    // }
     if (action.type === ActionKind.ADD_CART && action.payload?.kind === 'addToCart') {
-        const { id, amount, color, stock } = action.payload
+        const { amount, color, product } = action.payload
         // check if the item is already exist in the cart
-        if (state.cart_products.some(product => product.id === id && product.choosed_color === color)) {
-
-            let addProducts = state.cart_products.map((product) => {
-                if (product.id === id && (product.single_quantity! + amount) < stock && product.choosed_color === color) {
-                    return { ...product, single_quantity: product.single_quantity! + amount }
+        const isItemExist = state.cart_products.find(item => item.id === product.id + color)
+        if (isItemExist) {
+            let addProducts = state.cart_products.map((item) => {
+                if (item.id === product.id + color && (item.quantity + amount) <= item.stock) {
+                    return { ...item, quantity: item.quantity + amount }
                 } else {
-                    return { ...product }
+                    return item
                 }
             })
             return { ...state, cart_products: addProducts }
         } else {
-            let findAddedProduct = state.all_products.find((item) => item.id === id)
-            let newAddedProduct = { ...findAddedProduct!, single_quantity: amount, choosed_color: color, single_total_price: amount * findAddedProduct!.price, stock }
+            let quantity: number
+            if (amount <= product.stock) {
+                quantity = amount
+            } else {
+                quantity = product.stock
+            }
+            let newAddedProduct: singleProductCartType = {
+                name: product.name,
+                price: product.price,
+                quantity,
+                stock: product.stock,
+                color,
+
+                img: product.imgUrls[0],
+                id: product.id + color
+            }
+
+
             return { ...state, cart_products: [...state.cart_products, newAddedProduct] }
         }
 
 
     }
     if (action.type === ActionKind.ADD_ITEM && action.payload?.kind === 'addItem') {
-        const { id, color } = action.payload
-        let products = state.cart_products.map((product) => {
-            if (product.id === id && product.choosed_color === color && product.single_quantity! < product.stock) {
-                return { ...product, single_quantity: product.single_quantity! + 1, single_total_price: (product.single_quantity! + 1) * product.price }
+        const { id } = action.payload
+        let products = state.cart_products.map((item) => {
+            if (item.id === id && item.quantity < item.stock) {
+                return { ...item, quantity: item.quantity + 1 }
             } else {
-                return { ...product }
+                return item
             }
-
         })
-
         return { ...state, cart_products: products }
 
     }
     if (action.type === ActionKind.REMOVE_ITEM && action.payload?.kind === 'removeItem') {
-        const { id, color } = action.payload
-        let products = state.cart_products.map((product) => {
-            if (product.id === id && product.choosed_color === color && product.single_quantity! > 0) {
-                return { ...product, single_quantity: product.single_quantity! - 1, single_total_price: (product.single_quantity! - 1) * product.price }
+        const { id } = action.payload
+        let products = state.cart_products.map((item) => {
+            if (item.id === id && item.quantity > 1) {
+                return { ...item, quantity: item.quantity - 1 }
             } else {
-                return { ...product }
+                return item
             }
-
         })
-
         return { ...state, cart_products: products }
 
     }
     if (action.type === ActionKind.DELETE_PRODUCT && action.payload?.kind === 'deleteProduct') {
-        const { id, color } = action.payload
-        let products = state.cart_products.filter((product) => { return (product.id === id && product.choosed_color === color) === false })
+        const { id } = action.payload
+        let products = state.cart_products.filter((item) => item.id !== id)
         return { ...state, cart_products: products }
     }
     if (action.type === ActionKind.ClEAR_CART) {
-        return { ...state, cart_products: [] }
+        return { ...state, cart_products: [], checkout_price: 0, total_quantity: 0 }
 
     }
     throw new Error(`No Matching "${action.type}" - action type`)
 }
-
 export default cart_reducer

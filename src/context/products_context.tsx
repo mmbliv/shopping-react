@@ -13,10 +13,7 @@ export type productsType = {
     description: string;
     category: string;
     featured?: boolean;
-    single_quantity?: number;
-    choosed_color?: string;
-    single_total_price?: number;
-    stock: number
+
 
 
 }
