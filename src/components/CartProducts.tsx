@@ -6,12 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import { Link } from 'react-router-dom'
 import { CartStateType } from '../context/cart_context'
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 
 const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, checkout_price }) => {
 
-
+    const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     return (
 
@@ -74,7 +75,9 @@ const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addIte
                     <span>{formatPrice(checkout_price + 534)}</span>
                 </h5>
             </div>
-            <button className='btn login-btn'>login</button>
+            {isAuthenticated ? <Link to='/checkout' className='login-btn'><button className='btn' >checkout</button></Link> :
+                <button className='btn login-btn' onClick={loginWithRedirect}>login and checkout</button>}
+
         </Wrapper>
     )
 }
@@ -148,7 +151,7 @@ span{
     color:var(--clr-primary-3)
 }
 .login-btn{
-    width: 7rem;
+    width: max-content;
     margin:0 auto;
 }
 @media (min-width: 768px){

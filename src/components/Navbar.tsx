@@ -8,8 +8,10 @@ import { Drawer, IconButton } from "@mui/material";
 import CartBtn from "./CartBtn";
 import LoginBtn from "./LoginBtn";
 import { motion } from "framer-motion";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth0()
   const [openSideBar, setOpenSideBar] = useState(false);
   return (
     <Wrapper className="section section-center">
@@ -26,6 +28,11 @@ const Navbar = () => {
                 </li>
               );
             })}
+            {isAuthenticated &&
+              <li>
+                <Link to='/checkout'>Checkout</Link >
+              </li>
+            }
           </ul>
           <IconButton onClick={() => setOpenSideBar(true)}>
             <StyledIcon />
@@ -49,9 +56,11 @@ const Navbar = () => {
               </motion.li>
             );
           })}
-          <motion.li whileHover={{ scale: 1.2 }}>
-            <Link to='/checkout'>checkout</Link>
-          </motion.li>
+          {isAuthenticated &&
+            <motion.li whileHover={{ scale: 1.2 }}>
+              <Link to='/checkout'>checkout</Link>
+            </motion.li>
+          }
         </StyledUl>
         <SidebarBtn >
           <CartBtn />
@@ -108,7 +117,8 @@ const Wrapper = styled.nav`
       font-size: large;    
     }
     .cart-login-btn{
-      display:block;     
+      display:flex; 
+      align-items:center;
     }
     img{
       width: 90%;
@@ -146,5 +156,7 @@ const StyledUl = styled.ul`
 `;
 const SidebarBtn = styled.div`
 margin: 2rem auto;
+display: flex;
+
 
 `
