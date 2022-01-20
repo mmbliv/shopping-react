@@ -3,6 +3,7 @@ import { Home, About, Cart, Checkout, Error, Private, Products, Product } from '
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+
 function App() {
 
 
@@ -13,9 +14,11 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/Checkout' element={<Checkout />} />
+        {/* <Private path='/Checkout'>
+          <Checkout />
+        </Private> */}
+        <Route path='/Checkout' element={<Private><Checkout /></Private>} />
         <Route path='*' element={<Error />} />
-        <Route path='/Private' element={<Private />} />
         <Route path='/Products' element={<Products />} />
         <Route path='/Product/:id' element={<Product />} />
       </Routes>
