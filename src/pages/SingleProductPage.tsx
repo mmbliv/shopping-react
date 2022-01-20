@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { single_product_url } from "../utils/constant";
 import { useProductsContext } from "../context/products_context";
@@ -13,7 +13,7 @@ const SingleProductPage = () => {
 
   const { fetchSingleProduct, single_product: product, single_product_error: error, single_product_loading: loading } = useProductsContext()
   const { id } = useParams()
-  const { name, price, description, stock, reviews, id: sku, company, imgUrls } = product
+  const { imgUrls } = product
 
 
 

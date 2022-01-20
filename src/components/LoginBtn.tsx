@@ -1,14 +1,12 @@
 import React from 'react'
 import FaceIcon from '@mui/icons-material/Face';
-import { IconButton } from '@mui/material';
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 
 const LoginBtn = () => {
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
-    console.log(isAuthenticated)
+
     return (
         <Wrapper>
             {isAuthenticated ?

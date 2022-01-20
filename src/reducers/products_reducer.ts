@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { initialStateType } from '../context/products_context'
 import { productsType } from '../context/products_context'
 import { singleProductType } from '../context/products_context'

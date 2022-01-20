@@ -77,7 +77,7 @@ const AddToCart: React.FC<singleProductType> = (product) => {
 
                 <p >
                     <span>Colors: </span>
-                    <div className='colors-container'>
+                    <span className='colors-container'>
                         {colors.map((color, index) => {
                             return <button
                                 key={index}
@@ -89,7 +89,7 @@ const AddToCart: React.FC<singleProductType> = (product) => {
                             </button>
 
                         })}
-                    </div>
+                    </span>
                 </p>
 
                 <AmountBtn addItem={addItem} removeItem={removeItem} itemCount={itemCount} />

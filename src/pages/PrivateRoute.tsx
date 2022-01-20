@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute: React.FC = ({ children }) => {
   const { isAuthenticated } = useAuth0()
+
   if (isAuthenticated) {
     return <>{children}</>
   }

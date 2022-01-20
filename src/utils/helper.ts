@@ -1,5 +1,5 @@
 import { productsType } from "../context/products_context"
-import { CartStateType, singleProductCartType } from "../context/cart_context"
+import {  singleProductCartType } from "../context/cart_context"
 export const formatPrice=(number:number)=>{
     return new Intl.NumberFormat('en-US',{
         style:'currency',

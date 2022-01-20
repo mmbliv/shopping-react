@@ -14,8 +14,6 @@ export type productsType = {
     category: string;
     featured?: boolean;
 
-
-
 }
 export type singleProductType = {
     category: string;

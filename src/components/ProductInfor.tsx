@@ -7,7 +7,7 @@ import AddToCart from './AddToCart'
 
 
 const ProductInfor: React.FC<singleProductType> = ({ ...product }) => {
-    const { name, price, description, stock, stars, reviews, id, company, colors, imgUrls } = product
+    const { name, price, description, stock, stars, reviews, id, company } = product
 
     return (
         <Wrapper className='section' >

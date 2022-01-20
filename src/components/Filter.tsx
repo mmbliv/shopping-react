@@ -42,94 +42,95 @@ const Filter = () => {
                         placeholder='search...'
                         onChange={searchProducts} />
                 </div>
-                {/* category search filter */}
-                <form className='category'>
-                    <label ><h4>Category</h4></label>
-                    <select
-                        name="category"
-                        value={filters.category}
-                        size={categoryItems.length}
-                        className='category-select'
-                        onChange={searchProducts}
-                    >
-                        {categoryItems.map((item, index) => {
-                            return (
-                                <option key={index} value={item} className='category-option'>
-                                    {item}
-                                </option>
-                            )
-                        })}
-                    </select>
-                </form>
-                {/* company search filter */}
-                <form>
-                    <label><h4>Company</h4></label>
-                    <select
-                        name="company"
-                        id="company"
-                        value={filters.company}
-                        className='company-select'
-                        onChange={searchProducts}
-                    >
-                        {companyItems.map((item, index) => {
-                            return (
-                                <option value={item} key={index}>{
-                                    item}</option>
-                            )
+            </form>
+            {/* category search filter */}
+            <form className='category' onSubmit={(e) => e.preventDefault()}>
+                <label ><h4>Category</h4></label>
+                <select
+                    name="category"
+                    value={filters.category}
+                    size={categoryItems.length}
+                    className='category-select'
+                    onChange={searchProducts}
+                >
+                    {categoryItems.map((item, index) => {
+                        return (
+                            <option key={index} value={item} className='category-option'>
+                                {item}
+                            </option>
+                        )
+                    })}
+                </select>
+            </form>
+            {/* company search filter */}
+            <form onSubmit={(e) => e.preventDefault()}>
+                <label><h4>Company</h4></label>
+                <select
+                    name="company"
+                    id="company"
+                    value={filters.company}
+                    className='company-select'
+                    onChange={searchProducts}
+                >
+                    {companyItems.map((item, index) => {
+                        return (
+                            <option value={item} key={index}>{
+                                item}</option>
+                        )
 
-                        })}
+                    })}
 
-                    </select>
+                </select>
 
-                </form>
-                {/* color search filter */}
-                <div >
-                    <h4>Colors: </h4>
-                    <div className='colors-container'>
-                        {colorItems.map((color, index) => {
-                            if (color === 'ALL') {
-                                return <button
-                                    key={index}
-                                    onClick={(e) => chooseColor(color, e)}
-                                    name='color'
-                                    value={color}
-                                    className={`color-all-btn ${mainColor === 'ALL' ? 'active' : null}`}
-
-                                >{color}</button>
-                            }
-
+            </form>
+            {/* color search filter */}
+            <div >
+                <h4>Colors: </h4>
+                <div className='colors-container'>
+                    {colorItems.map((color, index) => {
+                        if (color === 'ALL') {
                             return <button
                                 key={index}
-                                className='color-btn'
-                                style={{ background: color }}
+                                onClick={(e) => chooseColor(color, e)}
                                 name='color'
                                 value={color}
-                                onClick={(e) => chooseColor(color, e)}
-                            >
-                                {mainColor === color ? <CheckIcon /> : null}
-                            </button>
+                                className={`color-all-btn ${mainColor === 'ALL' ? 'active' : null}`}
 
-                        })}
-                    </div>
+                            >{color}</button>
+                        }
+
+                        return <button
+                            key={index}
+                            className='color-btn'
+                            style={{ background: color }}
+                            name='color'
+                            value={color}
+                            onClick={(e) => chooseColor(color, e)}
+                        >
+                            {mainColor === color ? <CheckIcon /> : null}
+                        </button>
+
+                    })}
                 </div>
-                {/* price search filter */}
-                <div>
-                    <h4>Price:</h4>
-                    <h5>{formatPrice(filters.price)}</h5>
-                    <input
-                        max={filters.max_price}
-                        min={filters.min_price}
-                        // step={1}
-                        value={filters.price}
-                        name='price'
-                        type='range'
-                        onChange={searchProducts}
-                    />
-                </div>
-                {/* free shipping or not filter */}
-                <div>
-                    <label htmlFor="shipping">Free Shipping</label>
-                    {/* <input
+            </div>
+            {/* price search filter */}
+            <div>
+                <h4>Price:</h4>
+                <h5>{formatPrice(filters.price)}</h5>
+                <input
+                    max={filters.max_price}
+                    min={filters.min_price}
+                    // step={1}
+                    value={filters.price}
+                    name='price'
+                    type='range'
+                    onChange={searchProducts}
+                />
+            </div>
+            {/* free shipping or not filter */}
+            <div>
+                <label htmlFor="shipping">Free Shipping</label>
+                {/* <input
                         type="checkbox"
                         id='shipping'
                         name="shipping"
@@ -138,20 +139,20 @@ const Filter = () => {
                         // onChange={searchProducts}
                         value={freeShipping.toString()}
                     /> */}
-                    <FormControlLabel
-                        control={<Checkbox
-                            checked={filters.shipping}
-                            value={filters.shipping}
-                            name='shipping'
-                            onChange={searchProducts}
-                        />}
-                        label='Free Shipping'
+                <FormControlLabel
+                    control={<Checkbox
+                        checked={filters.shipping}
+                        value={filters.shipping}
+                        name='shipping'
+                        onChange={searchProducts}
+                    />}
+                    label='Free Shipping'
 
-                    // checked={filters.shipping}
+                // checked={filters.shipping}
 
-                    />
-                </div>
-            </form>
+                />
+            </div>
+
             {/* clear filter */}
             <div>
                 <button className='btn' onClick={cleanFilter}>clear filter</button>
