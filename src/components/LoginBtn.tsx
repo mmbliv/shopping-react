@@ -2,15 +2,17 @@ import React from 'react'
 import FaceIcon from '@mui/icons-material/Face';
 import styled from "styled-components";
 import { useAuth0 } from '@auth0/auth0-react';
+import { useCartContext } from '../context/cart_context';
 
 
 const LoginBtn = () => {
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
+    const { clearCart } = useCartContext()
 
     return (
         <Wrapper>
             {isAuthenticated ?
-                <button onClick={() => logout({ returnTo: window.location.origin })} className='btn'>
+                <button onClick={() => { clearCart(); logout({ returnTo: window.location.origin }) }} className='btn'>
                     <StyledIcon /><span>LOGOUT</span>
                 </button> :
                 <button onClick={loginWithRedirect} className='btn'>

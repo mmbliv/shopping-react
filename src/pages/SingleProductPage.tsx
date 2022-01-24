@@ -13,7 +13,7 @@ const SingleProductPage = () => {
 
   const { fetchSingleProduct, single_product: product, single_product_error: error, single_product_loading: loading } = useProductsContext()
   const { id } = useParams()
-  const { imgUrls } = product
+  const {  imgUrls } = product
 
 
 

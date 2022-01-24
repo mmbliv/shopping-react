@@ -10,7 +10,6 @@ export type singleProductCartType = {
     quantity: number;
     stock: number;
     color: string;
-
     img: string;
     id: string;
 
@@ -24,6 +23,7 @@ export type CartStateType = {
     clearCart: () => void;
     checkout_price: number;
     total_quantity: number;
+    shipping: number;
 
 }
 
@@ -44,7 +44,8 @@ const initialState: CartStateType = {
     addItem: (id) => { },
     removeItem: (id) => { },
     deleteProduct: (id) => { },
-    clearCart: () => { }
+    clearCart: () => { },
+    shipping: 500
 }
 const CartContext = React.createContext(initialState)
 
