@@ -10,7 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 
 
-const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, checkout_price }) => {
+const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addItem, removeItem, deleteProduct, clearCart, checkout_price, shipping }) => {
 
     const { isAuthenticated, loginWithRedirect } = useAuth0()
 
@@ -72,7 +72,7 @@ const CartProducts: React.FC<CartStateType> = ({ cart_products: products, addIte
                 </h5>
                 <hr />
                 <h5 className='total-price'>Order Total:
-                    <span>{formatPrice(checkout_price + 534)}</span>
+                    <span>{formatPrice(checkout_price + shipping)}</span>
                 </h5>
             </div>
             {isAuthenticated ? <Link to='/checkout' className='login-btn'><button className='btn' >checkout</button></Link> :

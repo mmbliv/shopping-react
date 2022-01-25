@@ -5,6 +5,9 @@ import { useStripe, useElements, PaymentElement, CardElement, Elements } from '@
 import { useCartContext } from '../context/cart_context';
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import { Article } from "@mui/icons-material";
+import { formatPrice } from "../utils/helper";
+import { StripeCardElementChangeEvent } from '@stripe/stripe-js'
 
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!)
@@ -12,8 +15,10 @@ const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!)
 const CheckoutForm = () => {
     const { cart_products, total_quantity, checkout_price, clearCart, shipping } = useCartContext()
     const { user } = useAuth0()
+
     const [succeeded, setSucceeded] = useState(false)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState('')
+
     const [processing, setProcessing] = useState(false)
     const [disable, setDisabled] = useState(true)
     const [clientSecret, setClientSecret] = useState('')
@@ -51,11 +56,42 @@ const CheckoutForm = () => {
     useEffect(() => {
         createPaymentIntent()
     }, [])
-    const handleChange = async () => {
+    const handleChange = async (event: StripeCardElementChangeEvent) => {
+        setDisabled(event.empty)
+        setError(event.error ? event.error.message : '')
 
     }
-    const handleSubmit = async () => { }
-    return <div>
+    const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault()
+        setProcessing(true)
+        const payload = await stripe?.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements?.getElement(CardElement)!
+            }
+        })
+        if (payload?.error) {
+            setError(`Payment Failed ${payload.error.message}`)
+            setProcessing(false)
+        } else {
+            setError('')
+            setProcessing(false)
+            setSucceeded(true)
+        }
+    }
+    return <div >
+        {
+            succeeded ?
+                <article className="title">
+                    <h4>Thank you</h4>
+                    <h4>Your payment was successful!</h4>
+                </article>
+                :
+                <article className="title">
+                    <h4>Hello,{user && user.nickname}</h4>
+                    <p>Your total is {formatPrice(checkout_price + shipping)}</p>
+                </article>
+
+        }
         <form id='payment-form' onSubmit={handleSubmit}>
             <CardElement
                 id="card-element"
@@ -85,6 +121,11 @@ const StripeCheckout = () => {
     )
 };
 const Wrapper = styled.section`
+.title{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
 form {
   width: 30vw;
   min-width: 500px;
@@ -134,6 +175,7 @@ button {
   transition: all 0.2s ease;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
   width: 100%;
+  margin-top: 1rem;
 }
 
 button:hover {
