@@ -4,12 +4,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useStripe, useElements, PaymentElement, CardElement, Elements } from '@stripe/react-stripe-js';
 import { useCartContext } from '../context/cart_context';
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!)
 
 const CheckoutForm = () => {
-    const { cart_products, total_quantity, checkout_price, clearCart } = useCartContext()
+    const { cart_products, total_quantity, checkout_price, clearCart, shipping } = useCartContext()
     const { user } = useAuth0()
     const [succeeded, setSucceeded] = useState(false)
     const [error, setError] = useState(null)
@@ -36,6 +37,15 @@ const CheckoutForm = () => {
         },
     }
     const createPaymentIntent = async () => {
+        try {
+            const { data } = await axios.post(
+                '/.netlify/functions/create-payment-intent',
+                JSON.stringify({ cart_products, checkout_price, shipping })
+            )
+            setClientSecret(data.clientSecret)
+        } catch (error) {
+            console.log(error)
+        }
 
     }
     useEffect(() => {

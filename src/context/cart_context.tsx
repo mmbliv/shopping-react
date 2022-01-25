@@ -25,6 +25,7 @@ export type CartStateType = {
     total_quantity: number;
     shipping: number;
 
+
 }
 
 // get local storage infor
@@ -45,7 +46,7 @@ const initialState: CartStateType = {
     removeItem: (id) => { },
     deleteProduct: (id) => { },
     clearCart: () => { },
-    shipping: 500
+    shipping: 50
 }
 const CartContext = React.createContext(initialState)
 
